@@ -1,13 +1,10 @@
 import { Link, useLocation, useNavigate } from 'react-router'
 import { FcGoogle } from 'react-icons/fc'
-
 import { toast } from 'react-hot-toast'
-
 import { useForm } from 'react-hook-form'
 import { imageUpload } from '../utilis'
 import useAuth from '../hooks/useAuth'
 import { CgSpinnerTwoAlt } from 'react-icons/cg'
-
 
 const Register = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth()
@@ -15,206 +12,146 @@ const Register = () => {
   const location = useLocation()
   const from = location.state || '/'
 
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
 
-  console.log(errors)
   const onSubmit = async data => {
     const { name, image, email, password } = data
     const imageFile = image[0]
 
+    // Password Validation
+    if (!/[A-Z]/.test(password)) return toast.error('Password must contain an Uppercase letter')
+    if (!/[a-z]/.test(password)) return toast.error('Password must contain a Lowercase letter')
+    if (password.length < 6) return toast.error('Password must be at least 6 characters')
 
     try {
-
       const imageURL = await imageUpload(imageFile)
-    
       const result = await createUser(email, password)
-
-     
       await updateUserProfile(name, imageURL)
 
-      navigate(from, { replace: true })
       toast.success('Signup Successful')
-
+      navigate(from, { replace: true })
       console.log(result)
     } catch (err) {
       console.log(err)
       toast.error(err?.message)
     }
   }
-  
+
   const handleGoogleSignIn = async () => {
     try {
-    
       await signInWithGoogle()
-
-      navigate(from, { replace: true })
       toast.success('Signup Successful')
+      navigate(from, { replace: true })
     } catch (err) {
       console.log(err)
       toast.error(err?.message)
     }
   }
+
   return (
-    <div className='flex pt-30 justify-center items-center min-h-screen bg-white'>
-      <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-        <div className='mb-8 text-center'>
-          <h1 className='my-3 text-4xl font-bold'>Register Up</h1>
-          <p className='text-sm text-gray-400'>Welcome to PlantNet</p>
+    <div className="flex justify-center items-center min-h-screen shadow-green-200 py-30">
+      <div className="w-full max-w-xl shadow-green-300 shadow-lg rounded-lg p-6">
+
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold">Register</h1>
+          <p className="text-2xl text-green-500 mt-2">Welcome to Loanlink</p>
         </div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate=''
-          action=''
-          className='space-y-6 ng-untouched ng-pristine ng-valid'
-        >
-          <div className='space-y-4'>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Name
-              </label>
-              <input
-                type='text'
-                id='name'
-                placeholder='Enter Your Name Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-                {...register('name', {
-                  required: 'Name is required',
-                  maxLength: {
-                    value: 20,
-                    message: 'Name cannot be too long',
-                  },
-                })}
-              />
-              {errors.name && (
-                <p className='text-red-500 text-xs mt-1'>
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-            {/* Image */}
-            <div>
-              <label
-                htmlFor='image'
-                className='block mb-2 text-sm font-medium text-gray-700'
-              >
-                Profile Image
-              </label>
-              <input
-                name='image'
-                type='file'
-                id='image'
-                accept='image/*'
-                className='block w-full text-sm text-gray-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-md file:border-0
-      file:text-sm file:font-semibold
-      file:bg-lime-50 file:text-lime-700
-      hover:file:bg-lime-100
-      bg-gray-100 border border-dashed border-lime-300 rounded-md cursor-pointer
-      focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400
-      py-2'
-                {...register('image')}
-              />
-              <p className='mt-1 text-xs text-gray-400'>
-                PNG, JPG or JPEG (max 2MB)
-              </p>
-            </div>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Email address
-              </label>
-              <input
-                type='email'
-                id='email'
-                placeholder='Enter Your Email Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-                {...register('email', {
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: 'Please enter a valid email address.',
-                  },
-                })}
-              />
-              {errors.email && (
-                <p className='text-red-500 text-xs mt-1'>
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <div className='flex justify-between'>
-                <label htmlFor='password' className='text-sm mb-2'>
-                  Password
-                </label>
-              </div>
-              <input
-                type='password'
-                autoComplete='new-password'
-                id='password'
-                placeholder='*******'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
-                {...register('password', {
-                  required: 'Password is required',
-                  minLength: {
-                    value: 6,
-                    message: 'Password must be at least 6 characters',
-                  },
-                })}
-              />
-              {errors.password && (
-                <p className='text-red-500 text-xs mt-1'>
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+
+          {/* Name */}
+          <div>
+            <label className="block mb-2 text-sm font-medium">Name</label>
+            <input
+              type="text"
+              placeholder="Enter Your Name"
+              className="w-full px-4 py-3 rounded-md  border border-gray-300"
+              {...register('name', { required: 'Name is required' })}
+            />
+            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
           </div>
 
+          {/* Role */}
           <div>
-            <button
-              type='submit'
-              className='bg-lime-500 w-full rounded-md py-3 text-white'
+            <label className="block mb-2 text-sm font-medium">Role</label>
+            <select
+              className="w-full px-4 py-3 rounded-md border border-gray-300"
+              {...register('role', { required: 'Role is required' })}
             >
-              {loading ? (
-                <CgSpinnerTwoAlt className='animate-spin m-auto' />
-              ) : (
-                'Continue'
-              )}
-            </button>
+              <option value="borrower">Borrower</option>
+              <option value="manager">Manager</option>
+            </select>
+            {errors.role && <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>}
           </div>
+
+          {/* Image */}
+          <div>
+            <label className="block mb-2 text-sm font-medium">Profile Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="w-full py-3  border border-dashed border-green-400 rounded cursor-pointer"
+              {...register('image')}
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block mb-2 text-sm font-medium">Email Address</label>
+            <input
+              type="email"
+              placeholder="Enter Your Email"
+              className="w-full px-4 py-3 rounded-md  border border-gray-300"
+              {...register('email', { required: 'Email is required' })}
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block mb-2 text-sm font-medium">Password</label>
+            <input
+              type="password"
+              placeholder="******"
+              className="w-full px-4 py-3 rounded-md bg-gray-200 border border-gray-300"
+              {...register('password', { required: 'Password is required' })}
+            />
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+          </div>
+
+          <button type="submit" className="w-full bg-green-500 hover:scale-105 text-white py-3 rounded-md text-lg">
+            {loading ? <CgSpinnerTwoAlt className="animate-spin m-auto" /> : 'Continue'}
+          </button>
         </form>
-        <div className='flex items-center pt-4 space-x-1'>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-          <p className='px-3 text-sm dark:text-gray-400'>
-            Register with social accounts
-          </p>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
+
+        {/* Divider */}
+        <div className="flex items-center my-6">
+          <div className="flex-1 h-px bg-gray-300"></div>
+          <p className="px-3 text-sm text-gray-400">Register with social accounts</p>
+          <div className="flex-1 h-px bg-gray-300"></div>
         </div>
+
+        {/* Google Sign In */}
         <div
           onClick={handleGoogleSignIn}
-          className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
+          className="flex justify-center hover:scale-105 items-center gap-3 border border-gray-300 py-3 rounded-md cursor-pointer"
         >
-          <FcGoogle size={32} />
-
-          <p>Continue with Google</p>
+          <FcGoogle size={30} />
+          <p className="text-gray-700 font-medium">Continue with Google</p>
         </div>
-        <p className='px-6 text-sm text-center text-gray-400'>
+
+        {/* Bottom Link */}
+        <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{' '}
-          <Link
-            to='/login'
-            className='hover:underline hover:text-lime-500 text-gray-600'
-          >
+          <Link to="/login" className="text-green-600 hover:underline">
             Login
           </Link>
-          
         </p>
+
       </div>
     </div>
   )

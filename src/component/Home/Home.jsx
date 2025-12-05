@@ -1,9 +1,12 @@
 import React from 'react';
+import Banner from './homeComponents/Banner';
+import AvailableLoan from './homeComponents/AvailableLoan';
 
 const Home = () => {
     return (
-        <div>
-            <p>this is home component</p>
+        <div className='py-30'>
+           <Banner></Banner>
+           <AvailableLoan></AvailableLoan>
         </div>
     );
 };
