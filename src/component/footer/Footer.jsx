@@ -4,6 +4,9 @@ import {
   
   FaLinkedinIn,
   FaInstagram,
+  FaFacebookSquare,
+  FaInstagramSquare,
+  FaLinkedin,
 } from "react-icons/fa";
 import logoImg from "../../assets/logo.jpeg";
 
@@ -65,29 +68,31 @@ const Footer = () => {
           <h3 className="text-xl font-bold mb-4">Contact Us</h3>
           <ul className="space-y-2 text-gray-200">
             <li>Email: support@loanlink.com</li>
-            <li>Phone: +880 1521 777 639</li>
+            <li>Phone: +880 1441 777 639</li>
             <li>Address: Kishoreganj, Bangladesh</li>
           </ul>
 
-          {/* Social Media */}
+          
           <div className="flex mt-4 space-x-4">
-            <a href="#" className="hover:text-green-300 transition">
-              <FaFacebookF />
-            </a>
-            <a href="#" className="hover:text-green-300 bg-white w-6 h-6 object-contain transition">
+            <a  href="https://x.com" className="hover:scale-110 bg-white w-7 h-6 object-contain transition">
              <img src="https://i.ibb.co.com/WC1HVbx/download.png" alt="" />
             </a>
-           
-            <a href="#" className="hover:text-green-300 transition">
-              <FaLinkedinIn />
+            
+             <a href="https://www.facebook.com" className="hover:scale-110">
+              <FaFacebookSquare size={30} color="blue"/>
             </a>
-            <a href="#" className="hover:text-green-300 transition">
-              <FaInstagram />
+            <a href="https://www.instagram.com" className="hover:scale-110">
+              <FaInstagramSquare size={30} color="red" />
             </a>
+            
+            <a href="https://www.linkedin.com" className="hover:scale-110">
+              {" "}
+              <FaLinkedin size={30} color="blue" />
+            </a>
+
           </div>
         </div>
 
-        {/* Newsletter / Subscribe */}
         <div>
           <h3 className="text-xl font-bold mb-4">Subscribe</h3>
           <p className="text-gray-200 mb-4">

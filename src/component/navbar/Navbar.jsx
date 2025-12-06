@@ -1,6 +1,6 @@
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { NavLink } from 'react-router'
 import useAuth from '../../hooks/useAuth'
 import logoImg from '../../assets/logo.jpeg'
 import { toast } from 'react-hot-toast'
@@ -19,7 +19,6 @@ const Navbar = () => {
 
   const handleTheme = checked => setTheme(checked ? 'dark' : 'light')
 
-  // Logout with toast
   const handleLogout = async () => {
     try {
       await logOut()
@@ -30,32 +29,70 @@ const Navbar = () => {
     }
   }
 
+ 
+  const activeClass = "text-white border-b-2 border-white font-semibold"
+  const normalClass = "hover:text-blue-200 dark:hover:text-blue-300 font-semibold"
+
   return (
     <nav className="fixed w-full bg-green-600 z-10 shadow-sm transition-colors duration-300">
       <div className="w-10/12 mx-auto flex justify-between items-center py-4">
 
         {/* Logo */}
-        <Link to="/" className='flex items-center'>
+        <NavLink to="/" className='flex items-center'>
           <img src={logoImg} alt="loanlink" className='w-16 rounded-full'/>
           <h1 className="text-3xl font-bold ml-2">Loanlink</h1>
-        </Link>
+        </NavLink>
 
-       
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/" className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold">Home</Link>
-          <Link to="/all-loans" className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold">All-Loans</Link>
-          <Link to="/about" className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold">About Us</Link>
-              <Link to="/contact" className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold">Contact</Link>
-          {!user && (
+          <NavLink
+            to="/"
+            className={({ isActive }) => isActive ? activeClass : normalClass}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/all-loans"
+            className={({ isActive }) => isActive ? activeClass : normalClass}
+          >
+            All Loans
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => isActive ? activeClass : normalClass}
+          >
+            About Us
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => isActive ? activeClass : normalClass}
+          >
+            Contact
+          </NavLink>
+
+          {!user ? (
             <>
-              
-              <Link to="/login" className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold">Login</Link>
-              <Link to="/register" className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold">Register</Link>
+              <NavLink
+                to="/login"
+                className={({ isActive }) => isActive ? activeClass : normalClass}
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/register"
+                className={({ isActive }) => isActive ? activeClass : normalClass}
+              >
+                Register
+              </NavLink>
             </>
-          )}
-          {user && (
+          ) : (
             <>
-              <Link to="/dashboard" className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold">Dashboard</Link>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) => isActive ? activeClass : normalClass}
+              >
+                Dashboard
+              </NavLink>
               <img
                 src={user.photoURL || ''}
                 alt="profile"
@@ -70,6 +107,7 @@ const Navbar = () => {
               </button>
             </>
           )}
+
           {/* Theme toggle */}
           <input
             type="checkbox"
@@ -85,7 +123,7 @@ const Navbar = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="flex items-center gap-2 p-2 border border-neutral-200 dark:border-gray-700 rounded-full cursor-pointer"
           >
-            <AiOutlineMenu className="text-gray-900 dark:text-white" size={20} />
+            <AiOutlineMenu className="text-white dark:text-white" size={20} />
             {user && (
               <img
                 src={user.photoURL || ''}
@@ -98,19 +136,54 @@ const Navbar = () => {
 
           {isOpen && (
             <div className="absolute right-0 top-12 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden text-sm transition-colors duration-300">
-              <Link to="/" className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">Home</Link>
-              <Link to="/all-loans" className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">All-Loans</Link>
-              <Link to="/about" className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">About Us</Link>
-                  <Link to="/contact" className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">Contact</Link>
+              <NavLink
+                to="/"
+                className={({ isActive }) => isActive ? activeClass + ' block px-4 py-3' : normalClass + ' block px-4 py-3'}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/all-loans"
+                className={({ isActive }) => isActive ? activeClass + ' block px-4 py-3' : normalClass + ' block px-4 py-3'}
+              >
+                All Loans
+              </NavLink>
+              <NavLink
+                to="/about"
+                className={({ isActive }) => isActive ? activeClass + ' block px-4 py-3' : normalClass + ' block px-4 py-3'}
+              >
+                About Us
+              </NavLink>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) => isActive ? activeClass + ' block px-4 py-3' : normalClass + ' block px-4 py-3'}
+              >
+                Contact
+              </NavLink>
+
               {!user ? (
                 <>
-                  
-                  <Link to="/login" className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">Login</Link>
-                  <Link to="/register" className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">Register</Link>
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) => isActive ? activeClass + ' block px-4 py-3' : normalClass + ' block px-4 py-3'}
+                  >
+                    Login
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }) => isActive ? activeClass + ' block px-4 py-3' : normalClass + ' block px-4 py-3'}
+                  >
+                    Register
+                  </NavLink>
                 </>
               ) : (
                 <>
-                  <Link to="/dashboard" className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold">Dashboard</Link>
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) => isActive ? activeClass + ' block px-4 py-3' : normalClass + ' block px-4 py-3'}
+                  >
+                    Dashboard
+                  </NavLink>
                   <div
                     onClick={handleLogout}
                     className="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold cursor-pointer"
@@ -119,6 +192,7 @@ const Navbar = () => {
                   </div>
                 </>
               )}
+
               {/* Mobile theme toggle */}
               <div className="px-4 py-3">
                 <label className="flex items-center gap-2 cursor-pointer">
