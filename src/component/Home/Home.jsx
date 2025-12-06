@@ -3,6 +3,8 @@ import Banner from './homeComponents/Banner';
 import AvailableLoan from './homeComponents/AvailableLoan';
 import HowItWorks from './homeComponents/HowItWorks';
 import Feedback from './homeComponents/Feedback';
+import Faq from './homeComponents/Faq';
+import Partners from './homeComponents/Partners';
 
 const Home = () => {
     return (
@@ -11,6 +13,8 @@ const Home = () => {
            <AvailableLoan></AvailableLoan>
            <HowItWorks></HowItWorks>
            <Feedback></Feedback>
+           <Faq></Faq>
+           <Partners></Partners>
         </div>
     );
 };

@@ -167,7 +167,7 @@ const HowItWorks = () => {
         </div>
 
       
-        <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-8 text-center text-sm ">
           * Processing time may vary depending on verification requirements and applicant conditions.
         </p>
       </div>

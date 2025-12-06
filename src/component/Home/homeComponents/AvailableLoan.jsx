@@ -29,7 +29,7 @@ const AvailableLoan = () => {
           {loans.map((loan) => (
             <div
               key={loan._id}
-              className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col"
+              className=" shadow-md rounded-lg overflow-hidden flex flex-col"
             >
               {/* Image */}
               <img
@@ -45,7 +45,7 @@ const AvailableLoan = () => {
                 </h3>
 
                 {/* Short Description */}
-                <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                <p className="text-sm  mb-4 line-clamp-3">
                   {loan.shortDesc}
                 </p>
 
