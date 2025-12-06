@@ -9,7 +9,7 @@ const AvailableLoan = () => {
   const { data: loans = [], isLoading } = useQuery({
     queryKey: ['allLoans'],
     queryFn: async () => {
-      const res = await axiosSecure.get('all-loans');
+      const res = await axiosSecure.get('available-loans');
       return res.data;
     },
   });
@@ -17,7 +17,7 @@ const AvailableLoan = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="py-12 bg-gray-50">
+    <div className="py-12 ">
       <div className="w-10/12 mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold text-green-700 mb-6 text-center">
           Available Loans
@@ -26,7 +26,7 @@ const AvailableLoan = () => {
         {/* 3 Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-          {loans.slice(0, 6).map((loan) => (
+          {loans.map((loan) => (
             <div
               key={loan._id}
               className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col"
@@ -40,7 +40,7 @@ const AvailableLoan = () => {
 
               <div className="p-4 flex flex-col flex-grow">
                 {/* Title */}
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <h3 className="text-xl font-semibold text-green-600 mb-2">
                   {loan.title}
                 </h3>
 
@@ -51,7 +51,7 @@ const AvailableLoan = () => {
 
                 {/* Max Limit */}
                 <div className="mt-auto flex items-center justify-between">
-                  <span className="text-green-600 font-semibold">
+                  <span className="text-red-600 font-semibold">
                     Max Limit: ${loan.maxLimit}
                   </span>
 
