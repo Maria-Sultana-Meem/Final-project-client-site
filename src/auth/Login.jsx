@@ -4,12 +4,15 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { CgSpinnerTwoAlt } from 'react-icons/cg'
 import useAuth from '../hooks/useAuth'
+import { saveOrUpdateUser } from '../utilis'
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state || '/'
+ const from = location.state || '/'
+ console.log(from);
+ 
 
   const {
     register,
@@ -20,7 +23,12 @@ const Login = () => {
   const onSubmit = async data => {
     const { email, password } = data
     try {
-      await signIn(email, password)
+    const {user} = await signIn(email, password)
+     await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      })
       toast.success('Login Successful')
       navigate(from, { replace: true })
     } catch (err) {
@@ -31,7 +39,14 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle()
+    const {user} = await signInWithGoogle()
+    await saveOrUpdateUser({
+            name: user?.displayName,
+            email: user?.email,
+            image: user?.photoURL || null,
+            
+          })
+      
       toast.success('Login Successful')
       navigate(from, { replace: true })
     } catch (err) {

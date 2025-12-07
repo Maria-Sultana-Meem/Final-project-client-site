@@ -7,7 +7,7 @@ const ErrorPage = () => {
     <section className='bg-white'>
       <div className='container flex items-center min-h-screen px-6 py-12 mx-auto'>
         <div className='flex flex-col items-center max-w-sm mx-auto text-center'>
-          <p className='p-3 text-sm font-medium text-lime-500 rounded-full bg-blue-50'>
+          <p className='p-3 text-sm font-medium text-green-500 rounded-full bg-blue-50'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
@@ -28,7 +28,7 @@ const ErrorPage = () => {
             Something Went Wrong!
           </h1>
 
-          <p className='mt-4 text-gray-500'>Here are some helpful links:</p>
+          <p className='mt-4 '>Here are some helpful links:</p>
 
           <div className='flex items-center w-full mt-6 gap-x-3 sm:w-auto'>
             {/* Go Back Button */}
@@ -42,7 +42,7 @@ const ErrorPage = () => {
                 viewBox='0 0 24 24'
                 strokeWidth='1.5'
                 stroke='currentColor'
-                className='w-5 h-5 rtl:rotate-180 text-lime-500'
+                className='w-5 h-5 rtl:rotate-180 text-green-500'
               >
                 <path
                   strokeLinecap='round'
@@ -57,7 +57,7 @@ const ErrorPage = () => {
             {/* Take Me Home Button */}
             <button
               onClick={() => navigate('/')}
-              className='w-1/2 px-5 py-1 text-sm text-white bg-lime-500 rounded-lg hover:bg-lime-600 transition-colors duration-200'
+              className='w-1/2 px-5 py-1 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition-colors duration-200'
             >
               Take Me Home
             </button>

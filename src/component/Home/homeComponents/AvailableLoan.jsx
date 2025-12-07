@@ -29,7 +29,7 @@ const AvailableLoan = () => {
           {loans.map((loan) => (
             <div
               key={loan._id}
-              className=" shadow-md rounded-lg overflow-hidden flex flex-col"
+              className=" shadow-md transition-transform duration-300 hover:scale-105 rounded-lg overflow-hidden flex flex-col"
             >
               {/* Image */}
               <img
@@ -57,7 +57,7 @@ const AvailableLoan = () => {
 
                   {/* View Details */}
                   <Link
-                    to={`/loan-details/${loan._id}`}
+                    to={`/all-loans/${loan._id}`}
                     className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm transition"
                   >
                     View Details

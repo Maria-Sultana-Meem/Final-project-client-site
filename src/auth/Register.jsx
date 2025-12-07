@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router'
 import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
-import { imageUpload } from '../utilis'
+import { imageUpload, saveOrUpdateUser } from '../utilis'
 import useAuth from '../hooks/useAuth'
 import { CgSpinnerTwoAlt } from 'react-icons/cg'
 
@@ -30,6 +30,7 @@ const Register = () => {
     try {
       const imageURL = await imageUpload(imageFile)
       const result = await createUser(email, password)
+       await saveOrUpdateUser({ name, email, image: imageURL })
       await updateUserProfile(name, imageURL)
 
       toast.success('Signup Successful')
@@ -43,7 +44,14 @@ const Register = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle()
+     const {user}= await signInWithGoogle()
+      
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL || null,
+        
+      })
       toast.success('Signup Successful')
       navigate(from, { replace: true })
     } catch (err) {
