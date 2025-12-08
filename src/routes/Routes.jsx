@@ -17,6 +17,8 @@ import MyLoans from "../component/dashboard/borrower/MyLoans";
 import PaymentSuccess from "../component/dashboard/borrower/PaymentSuccess";
 import AdminRoute from "./AdminRoute";
 import ManageUsers from "../component/dashboard/admin/ManageUsers";
+import DashboardHome from "../component/dashboard/DashboardHome";
+import ManageLoans from "../component/dashboard/admin/ManageLoans";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,12 @@ const router = createBrowserRouter([
     path: "/dashboard",
   element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children:[
+      {
+        index:true,
+        
+        element:<DashboardHome></DashboardHome>
+      },
+
       { path:'borrower-profile',
         element:<BorrowerProfile></BorrowerProfile>
     },
@@ -84,6 +92,10 @@ const router = createBrowserRouter([
     {
         path: 'manage-users',
         element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+      },
+    {
+        path: 'all-loan',
+        element:<AdminRoute><ManageLoans></ManageLoans></AdminRoute>
       },
   
   

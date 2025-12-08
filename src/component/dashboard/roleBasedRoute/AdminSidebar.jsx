@@ -11,7 +11,7 @@ const AdminSidebar = () => {
       </li>
 
       <li>
-        <Link to="/dashboard/all-loans" className="flex items-center gap-2">
+        <Link to="/dashboard/all-loan" className="flex items-center gap-2">
           <Layers size={20} color="orange"/> All Loan
         </Link>
       </li>
