@@ -15,6 +15,8 @@ import PrivateRoute from "./PrivateRoute";
 import BorrowerProfile from "../component/dashboard/borrower/BorrowerProfile";
 import MyLoans from "../component/dashboard/borrower/MyLoans";
 import PaymentSuccess from "../component/dashboard/borrower/PaymentSuccess";
+import AdminRoute from "./AdminRoute";
+import ManageUsers from "../component/dashboard/admin/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +80,10 @@ const router = createBrowserRouter([
     {
         path: 'payment-success',
         element: <PaymentSuccess />,
+      },
+    {
+        path: 'manage-users',
+        element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
       },
   
   
