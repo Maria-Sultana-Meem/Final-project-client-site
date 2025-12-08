@@ -104,9 +104,7 @@ const ManageUsers = () => {
                     </div>
                     <div>
                       <div className="font-bold">{user.name}</div>
-                      <div className="text-sm opacity-50">
-                        {user.location || "N/A"}
-                      </div>
+                      
                     </div>
                   </div>
                 </td>

@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute";
 import ManageUsers from "../component/dashboard/admin/ManageUsers";
 import DashboardHome from "../component/dashboard/DashboardHome";
 import ManageLoans from "../component/dashboard/admin/ManageLoans";
+import LoanApplications from "../component/dashboard/admin/LoanApplications";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
     {
         path: 'all-loan',
         element:<AdminRoute><ManageLoans></ManageLoans></AdminRoute>
+      },
+    {
+        path: 'loan-applications',
+        element:<AdminRoute><LoanApplications></LoanApplications></AdminRoute>
       },
   
   
