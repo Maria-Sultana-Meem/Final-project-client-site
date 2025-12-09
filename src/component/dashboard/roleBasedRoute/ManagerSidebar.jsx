@@ -29,7 +29,7 @@ const ManagerSidebar = () => {
       </li>
 
       <li>
-        <Link to="/dashboard/profile" className="flex items-center gap-2">
+        <Link to="/dashboard/manager-profile" className="flex items-center gap-2">
           <User2 size={20} color="blue"/> My Profile
         </Link>
       </li>

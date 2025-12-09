@@ -26,6 +26,7 @@ import ManagerManageLoans from "../component/dashboard/manager/ManagerManageLoan
 import UpdateLoan from "../component/dashboard/manager/UpdateLoan";
 import PendingLoans from "../component/dashboard/manager/PendingLoans";
 import ApprovedLoans from "../component/dashboard/manager/ApprovedLoans";
+import ManagerProfile from "../component/dashboard/manager/ManagersProfile";
 
 const router = createBrowserRouter([
   {
@@ -127,6 +128,10 @@ const router = createBrowserRouter([
       {
         path:'approved-loans',
         element:<ManagerRoute><ApprovedLoans></ApprovedLoans></ManagerRoute>
+      },
+      {
+        path:'manager-profile',
+        element:<ManagerRoute><ManagerProfile></ManagerProfile></ManagerRoute>
       }
   
   

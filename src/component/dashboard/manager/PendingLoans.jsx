@@ -113,7 +113,7 @@ const PendingLoans = () => {
             <p><strong>Loan Title:</strong> {selectedLoan.loanTitle}</p>
             <p><strong>Interest:</strong> {selectedLoan.interest}</p>
             <p><strong>Status:</strong> {selectedLoan.status}</p>
-            <p><strong>Application Fee Status:</strong> {selectedLoan.applicationFee}</p>
+            <p><strong>Application Fee Status:</strong> {selectedLoan.applicationFeeStatus}</p>
             <p><strong>Applied At:</strong> {selectedLoan.createdAt}</p>
             <div className="modal-action">
               <button onClick={() => setSelectedLoan(null)} className="btn">Close</button>
