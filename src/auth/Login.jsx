@@ -10,9 +10,9 @@ const Login = () => {
   const { signIn, signInWithGoogle, loading } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-//  const from = location.state || '/'
-const from = location.state?.from?.pathname || "/"
- console.log(from);
+ const from = location.state || '/'
+
+
  
 
   const {

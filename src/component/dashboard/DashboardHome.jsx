@@ -36,7 +36,7 @@ const DashboardHome = () => {
 
         {role === "manager" && (
           <>
-            <Link to="/dashboard/all-loans" className="p-4 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 text-center font-semibold">
+            <Link to="/dashboard/manage-loans" className="p-4 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 text-center font-semibold">
               View All Loans
             </Link>
           </>

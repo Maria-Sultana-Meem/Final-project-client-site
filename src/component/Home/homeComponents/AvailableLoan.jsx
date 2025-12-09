@@ -27,7 +27,7 @@ const AvailableLoan = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {loans.map((loan) => (
-            <div
+            <div data-aos="fade-up"
               key={loan._id}
               className=" shadow-md transition-transform duration-300 hover:scale-105 rounded-lg overflow-hidden flex flex-col"
             >

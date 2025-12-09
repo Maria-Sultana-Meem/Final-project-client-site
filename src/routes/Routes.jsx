@@ -75,6 +75,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:'/loan-application',
+        element:<PrivateRoute><LoanApplicationForm></LoanApplicationForm></PrivateRoute>
+      }
     ],
   },
   {

@@ -6,13 +6,15 @@ import { Link } from "react-router";
 
 const AllLoans = () => {
   const axiosSecure = useAxiosSecure();
-  const [page, setPage] = useState(1); 
+  const [page, setPage] = useState(1);
   const limit = 6;
 
   const { data, isLoading } = useQuery({
     queryKey: ["allLoans", page],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/all-loans?limit=${limit}&skip=${(page - 1) * limit}`);
+      const res = await axiosSecure.get(
+        `/all-loans?limit=${limit}&skip=${(page - 1) * limit}`
+      );
       return res.data;
     },
     keepPreviousData: true,
@@ -20,8 +22,7 @@ const AllLoans = () => {
 
   if (isLoading) return <LoadingSpinner />;
 
- 
-  const totalPages = 5; 
+  const totalPages = 5;
 
   return (
     <section className="py-30">
@@ -33,7 +34,7 @@ const AllLoans = () => {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {data.map((loan) => (
-            <div
+            <div data-aos="fade-up"
               key={loan._id}
               className=" shadow-lg rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl border border-gray-100 dark:border-slate-700"
             >
@@ -43,9 +44,12 @@ const AllLoans = () => {
                 className="h-52 w-full object-cover"
               />
               <div className="p-5 space-y-3">
-                <h3 className="text-xl font-bold text-green-700">{loan.title}</h3>
+                <h3 className="text-xl font-bold text-green-700">
+                  {loan.title}
+                </h3>
                 <p className="text-sm font-medium">
-                  Category: <span className="font-semibold">{loan.category}</span>
+                  Category:{" "}
+                  <span className="font-semibold">{loan.category}</span>
                 </p>
                 <p className=" text-sm line-clamp-3">{loan.shortDesc}</p>
                 <hr className="border-gray-200 dark:border-gray-700" />
@@ -77,15 +81,21 @@ const AllLoans = () => {
           >
             Prev
           </button>
+
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i}
-              className={`btn btn-sm ${page === i + 1 ? "btn-active" : ""}`}
               onClick={() => setPage(i + 1)}
+              className={`btn btn-sm ${
+                page === i + 1
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-white text-black hover:bg-gray-100"
+              }`}
             >
               {i + 1}
             </button>
           ))}
+
           <button
             className="btn btn-sm"
             disabled={page === totalPages}
