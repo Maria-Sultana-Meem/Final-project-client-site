@@ -20,6 +20,10 @@ import ManageUsers from "../component/dashboard/admin/ManageUsers";
 import DashboardHome from "../component/dashboard/DashboardHome";
 import ManageLoans from "../component/dashboard/admin/ManageLoans";
 import LoanApplications from "../component/dashboard/admin/LoanApplications";
+import ManagerRoute from "./ManagerRoute";
+import AddLoan from "../component/dashboard/manager/Addloan";
+import ManagerManageLoans from "../component/dashboard/manager/ManagerManageLoans";
+import UpdateLoan from "../component/dashboard/manager/UpdateLoan";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +106,18 @@ const router = createBrowserRouter([
         path: 'loan-applications',
         element:<AdminRoute><LoanApplications></LoanApplications></AdminRoute>
       },
+      {
+        path:'add-loan',
+        element:<ManagerRoute><AddLoan></AddLoan></ManagerRoute>
+      },
+      {
+        path:'manage-loans',
+        element:<ManagerRoute><ManagerManageLoans></ManagerManageLoans></ManagerRoute>
+      },
+      {
+        path:'update-loan/:id',
+        element:<ManagerRoute><UpdateLoan></UpdateLoan></ManagerRoute>
+      }
   
   
   
