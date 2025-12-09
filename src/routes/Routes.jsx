@@ -24,6 +24,8 @@ import ManagerRoute from "./ManagerRoute";
 import AddLoan from "../component/dashboard/manager/Addloan";
 import ManagerManageLoans from "../component/dashboard/manager/ManagerManageLoans";
 import UpdateLoan from "../component/dashboard/manager/UpdateLoan";
+import PendingLoans from "../component/dashboard/manager/PendingLoans";
+import ApprovedLoans from "../component/dashboard/manager/ApprovedLoans";
 
 const router = createBrowserRouter([
   {
@@ -117,6 +119,14 @@ const router = createBrowserRouter([
       {
         path:'update-loan/:id',
         element:<ManagerRoute><UpdateLoan></UpdateLoan></ManagerRoute>
+      },
+      {
+        path:'pending-loans',
+        element:<ManagerRoute><PendingLoans></PendingLoans></ManagerRoute>
+      },
+      {
+        path:'approved-loans',
+        element:<ManagerRoute><ApprovedLoans></ApprovedLoans></ManagerRoute>
       }
   
   

@@ -17,13 +17,13 @@ const ManagerSidebar = () => {
       </li>
 
       <li>
-        <Link to="/dashboard/pending-applications" className="flex items-center gap-2">
+        <Link to="/dashboard/pending-loans" className="flex items-center gap-2">
           <ClipboardList size={25} color="red"/> Pending Applications
         </Link>
       </li>
 
       <li>
-        <Link to="/dashboard/approved-applications" className="flex items-center gap-2">
+        <Link to="/dashboard/approved-loans" className="flex items-center gap-2">
           <ClipboardCheck size={25} color="green"/> Approved Applications
         </Link>
       </li>
