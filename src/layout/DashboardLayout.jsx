@@ -11,7 +11,9 @@ const DashboardLayout = () => {
       <div className="flex flex-1">
 
         {/* Sidebar */}
-        <Sidebar />
+      <div>
+          <Sidebar/>
+      </div>
 
         {/* Main Content */}
         <div className="flex-1">
@@ -32,7 +34,9 @@ const DashboardLayout = () => {
 
       </div>
 
-      <Footer />
+     <div>
+       <Footer />
+     </div>
     </div>
   );
 };

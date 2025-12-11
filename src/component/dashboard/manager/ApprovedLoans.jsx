@@ -18,12 +18,12 @@ const ApprovedLoans = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Approved Loan Applications</h2>
+    <div className="p-6 shadow-sm shadow-green-500">
+      <h2 className="text-2xl text-green-500 font-bold mb-6">Approved Loan Applications</h2>
 
       <div className="overflow-x-auto">
-        <table className="table w-full border">
-          <thead className="bg-green-100">
+        <table className="table w-full">
+          <thead className="bg-green-500 text-white">
             <tr>
               <th>Loan ID</th>
               <th>User Info</th>

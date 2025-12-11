@@ -34,11 +34,11 @@ const LoanDetails = () => {
     navigate(`/loan-application/${loan._id}`);
   };
 
-  // frontend এ backend মতো numeric conversion
+  
   const numericInterest = parseFloat(loan.interest) || 0;
   const numericMaxLimit = parseFloat(loan.maxLimit) || 0;
 
-  // EMI calculation fallback (NaN safeguard)
+  
   const emiPlans = loan.emiPlans?.map(plan => ({
     duration: parseInt(plan.duration) || 1,
     monthlyPayment:

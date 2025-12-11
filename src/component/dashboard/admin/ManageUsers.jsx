@@ -12,16 +12,22 @@ const ManageUsers = () => {
   const [suspendReason, setSuspendReason] = useState("");
   const [suspendFeedback, setSuspendFeedback] = useState("");
 
-  // Load all users
+  // 🔍 Search + Filter States
+  const [searchText, setSearchText] = useState("");
+  const [filterRole, setFilterRole] = useState("all");
+
+  // Load users from backend with search + filter
   const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", searchText, filterRole],
     queryFn: async () => {
-      const res = await axiosSecure.get("/manage-users");
+      const res = await axiosSecure.get(
+        `/manage-users?search=${searchText}&role=${filterRole}`
+      );
       return res.data;
     },
   });
 
-  // Role Update
+  // ROLE UPDATE
   const handleRoleUpdate = async () => {
     try {
       await axiosSecure.patch(`/update-role/${selectedUser.email}`, {
@@ -39,7 +45,7 @@ const ManageUsers = () => {
     }
   };
 
-  // Suspend User
+  // SUSPEND USER
   const handleSuspend = async () => {
     try {
       await axiosSecure.patch(`/suspend-user/${selectedUser.email}`, {
@@ -48,7 +54,6 @@ const ManageUsers = () => {
       });
 
       toast.success("User Suspended!");
-
       setSuspendReason("");
       setSuspendFeedback("");
       setSelectedUser(null);
@@ -60,7 +65,7 @@ const ManageUsers = () => {
     }
   };
 
-  // Un-Suspend User
+  // UN-SUSPEND USER
   const handleUnsuspend = async (email) => {
     try {
       await axiosSecure.patch(`/update-role/${email}`, {
@@ -78,6 +83,30 @@ const ManageUsers = () => {
     <div className="p-6 shadow-sm shadow-green-500">
       <h2 className="text-2xl text-green-500 font-bold mb-5">Manage Users</h2>
 
+      {/* 🔍 SEARCH + FILTER BAR */}
+      <div className="flex flex-col md:flex-row gap-3 mb-4">
+        <input
+          type="text"
+          placeholder="Search by name or email..."
+          className="input input-bordered w-full md:w-1/2"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+
+        <select
+          className="select select-bordered w-full md:w-1/3"
+          value={filterRole}
+          onChange={(e) => setFilterRole(e.target.value)}
+        >
+          <option value="all">All Roles</option>
+          <option value="admin">Admin</option>
+          <option value="manager">Manager</option>
+          <option value="borrower">Borrower</option>
+          <option value="suspended">Suspended</option>
+        </select>
+      </div>
+
+      {/* TABLE */}
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
         <table className="table">
           <thead className="bg-green-500 text-white">
@@ -104,7 +133,6 @@ const ManageUsers = () => {
                     </div>
                     <div>
                       <div className="font-bold">{user.name}</div>
-                      
                     </div>
                   </div>
                 </td>
@@ -127,10 +155,8 @@ const ManageUsers = () => {
                 </td>
 
                 <td className="flex gap-2">
-                  {/* Admin → no action */}
                   {user.role !== "admin" && (
                     <>
-                      {/* SUSPENDED USERS */}
                       {user.role === "suspended" ? (
                         <button
                           className="btn btn-xs btn-warning"
@@ -140,7 +166,6 @@ const ManageUsers = () => {
                         </button>
                       ) : (
                         <>
-                          {/* UPDATE ROLE */}
                           <button
                             className="btn btn-xs btn-outline"
                             onClick={() => {
@@ -154,7 +179,6 @@ const ManageUsers = () => {
                             Update
                           </button>
 
-                          {/* SUSPEND */}
                           <button
                             className="btn btn-xs btn-outline btn-error"
                             onClick={() => {
@@ -177,6 +201,7 @@ const ManageUsers = () => {
         </table>
       </div>
 
+      {/* MODALS (same as before) */}
       {/* UPDATE ROLE MODAL */}
       <dialog id="update_modal" className="modal">
         <div className="modal-box">
@@ -203,9 +228,7 @@ const ManageUsers = () => {
             </button>
             <button
               className="btn"
-              onClick={() =>
-                document.getElementById("update_modal").close()
-              }
+              onClick={() => document.getElementById("update_modal").close()}
             >
               Close
             </button>
@@ -246,9 +269,7 @@ const ManageUsers = () => {
 
             <button
               className="btn"
-              onClick={() =>
-                document.getElementById("suspend_modal").close()
-              }
+              onClick={() => document.getElementById("suspend_modal").close()}
             >
               Close
             </button>
