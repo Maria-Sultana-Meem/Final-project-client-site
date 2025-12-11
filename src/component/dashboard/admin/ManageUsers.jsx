@@ -75,15 +75,15 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-5">Manage Users</h2>
+    <div className="p-6 shadow-sm shadow-green-500">
+      <h2 className="text-2xl text-green-500 font-bold mb-5">Manage Users</h2>
 
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
         <table className="table">
-          <thead>
+          <thead className="bg-green-500 text-white">
             <tr>
               <th>#</th>
-              <th>User</th>
+              <th>Name</th>
               <th>Email</th>
               <th>Role</th>
               <th>Actions</th>

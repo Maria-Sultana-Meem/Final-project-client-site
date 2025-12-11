@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-
 import { useNavigate } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utilis";
@@ -8,7 +7,6 @@ import { imageUpload } from "../../../utilis";
 const AddLoan = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
 
   const handleAddLoan = async (e) => {
@@ -16,22 +14,23 @@ const AddLoan = () => {
     setLoading(true);
 
     const form = e.target;
-
     const title = form.title.value;
     const shortDesc = form.shortDesc.value;
     const category = form.category.value;
     const interest = parseFloat(form.interest.value);
     const maxLimit = parseFloat(form.maxLimit.value);
-
     const requiredDocs = form.requiredDocs.value.split(",").map(doc => doc.trim());
-    const emiPlans = form.emiPlans.value.split(",").map(v => parseInt(v));
-
+    const emiDurations = form.emiPlans.value.split(",").map(v => parseInt(v));
     const showOnHome = form.showOnHome.checked;
-
     const image = form.image.files[0];
 
+ 
+    const emiPlans = emiDurations.map(duration => ({
+      duration,
+      monthlyPayment: Math.round((maxLimit * interest / 100) / duration)
+    }));
+
     try {
-  
       const imageUrl = await imageUpload(image);
 
       const loanData = {
@@ -62,8 +61,8 @@ const AddLoan = () => {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">Add New Loan</h2>
+    <div className="p-6 shadow-sm shadow-green-500 max-w-3xl mx-auto">
+      <h2 className="text-2xl text-green-500 font-bold mb-6">Add New Loan</h2>
 
       <form onSubmit={handleAddLoan} className="space-y-4">
 
@@ -110,7 +109,7 @@ const AddLoan = () => {
           type="text"
           name="requiredDocs"
           className="input input-bordered w-full"
-          placeholder="Required Documents "
+          placeholder="Required Documents (comma separated)"
           required
         />
 
@@ -118,7 +117,7 @@ const AddLoan = () => {
           type="text"
           name="emiPlans"
           className="input input-bordered w-full"
-          placeholder="EMI Plans (e.g., 3,6,12)"
+          placeholder="EMI Durations (e.g., 3,6,12)"
           required
         />
 

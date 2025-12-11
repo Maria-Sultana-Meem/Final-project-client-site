@@ -8,34 +8,34 @@ const LoanApplications = () => {
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [selectedApplication, setSelectedApplication] = useState(null);
 
-  // Fetch all loan applications
-  const { data: applications = [], isLoading, refetch } = useQuery({
+  const { data: applications = [], isLoading } = useQuery({
     queryKey: ["loanApplications"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/loan-applications"); // backend API
+      const res = await axiosSecure.get("/loan-applications");
       return res.data;
     },
   });
 
   if (isLoading) return <LoadingSpinner />;
 
-  // Filter applications by status
   const filteredApplications =
     selectedStatus === "All"
       ? applications
       : applications.filter((app) => app.status === selectedStatus);
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-5">Loan Applications</h2>
+    <div className="p-4 md:p-6 shadow-sm shadow-green-500">
+      <h2 className="text-xl md:text-2xl text-green-600 font-bold mb-4 md:mb-5">
+        Loan Applications
+      </h2>
 
       {/* Filter */}
-      <div className="mb-4">
+      <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:gap-4">
         <label className="mr-2 font-semibold">Filter by Status:</label>
         <select
           value={selectedStatus}
           onChange={(e) => setSelectedStatus(e.target.value)}
-          className="select select-bordered w-40"
+          className="select select-bordered w-full sm:w-40"
         >
           <option value="All">All</option>
           <option value="Pending">Pending</option>
@@ -46,8 +46,8 @@ const LoanApplications = () => {
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
+        <table className="table w-full min-w-[600px] md:min-w-full">
+          <thead className="bg-green-500 text-white text-sm md:text-base">
             <tr>
               <th>Loan ID</th>
               <th>User</th>
@@ -59,14 +59,16 @@ const LoanApplications = () => {
           </thead>
           <tbody>
             {filteredApplications.map((app) => (
-              <tr key={app._id}>
-                <td>{app._id}</td>
+              <tr key={app._id} className="text-sm md:text-base">
+                <td className="break-all">{app._id}</td>
                 <td>
-                  {app.firstName || "N/A"} <br />
-                  <span className="text-sm text-gray-500">{app.userEmail}</span>
+                  {app.firstName} {app.lastName} <br />
+                  <span className="text-xs md:text-sm text-gray-500">
+                    {app.userEmail}
+                  </span>
                 </td>
                 <td>{app.loanTitle}</td>
-                <td>{app.loanAmount}</td>
+                <td>${app.loanAmount}</td>
                 <td>
                   <span
                     className={`badge ${
@@ -82,7 +84,7 @@ const LoanApplications = () => {
                 </td>
                 <td>
                   <button
-                    className="btn btn-sm btn-outline"
+                    className="btn  btn-outline btn-xs md:btn-sm"
                     onClick={() => setSelectedApplication(app)}
                   >
                     View
@@ -96,12 +98,12 @@ const LoanApplications = () => {
 
       {/* Modal */}
       {selectedApplication && (
-        <dialog open className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg mb-3">
+        <dialog open className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box p-4 md:p-6">
+            <h3 className="font-bold text-lg md:text-xl mb-3">
               Loan Application Details
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-2 text-sm md:text-base">
               <p>
                 <strong>Loan ID:</strong> {selectedApplication._id}
               </p>
@@ -129,7 +131,7 @@ const LoanApplications = () => {
             </div>
             <div className="modal-action">
               <button
-                className="btn"
+                className="btn btn-sm md:btn-md"
                 onClick={() => setSelectedApplication(null)}
               >
                 Close

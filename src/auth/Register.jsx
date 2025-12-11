@@ -19,7 +19,7 @@ const Register = () => {
   } = useForm()
 
   const onSubmit = async data => {
-    const { name, image, email, password } = data
+    const { name, image, email, password ,role} = data
     const imageFile = image[0]
 
     // Password Validation
@@ -30,7 +30,7 @@ const Register = () => {
     try {
       const imageURL = await imageUpload(imageFile)
       const result = await createUser(email, password)
-       await saveOrUpdateUser({ name, email, image: imageURL })
+       await saveOrUpdateUser({ name, email, image: imageURL ,role})
       await updateUserProfile(name, imageURL)
 
       toast.success('Signup Successful')
@@ -50,6 +50,7 @@ const Register = () => {
         name: user?.displayName,
         email: user?.email,
         image: user?.photoURL || null,
+        role:"borrower"
         
       })
       toast.success('Signup Successful')

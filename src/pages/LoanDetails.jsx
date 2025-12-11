@@ -11,7 +11,7 @@ const LoanDetails = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { role, isLoading: roleLoading } = useRole();
+  const [role, roleLoading] = useRole();
 
   const { data: loan = {}, isLoading } = useQuery({
     queryKey: ["loanDetails", id],
@@ -28,16 +28,26 @@ const LoanDetails = () => {
       toast.error("You must login first!");
       return navigate("/login");
     }
-
-    if (user?.role === "admin" || user?.role === "manager") {
+    if (role === "admin" || role === "manager") {
       return toast.error("Admins & Managers cannot apply for loans!");
     }
-
     navigate(`/loan-application/${loan._id}`);
   };
 
+  // frontend এ backend মতো numeric conversion
+  const numericInterest = parseFloat(loan.interest) || 0;
+  const numericMaxLimit = parseFloat(loan.maxLimit) || 0;
+
+  // EMI calculation fallback (NaN safeguard)
+  const emiPlans = loan.emiPlans?.map(plan => ({
+    duration: parseInt(plan.duration) || 1,
+    monthlyPayment:
+      plan.monthlyPayment ??
+      Math.round((numericMaxLimit * numericInterest) / 100 / (parseInt(plan.duration) || 1))
+  })) || [];
+
   return (
-    <div className="w-1o/12 md:w-9/12 mx-auto py-30 max-w-5xl">
+    <div className="w-11/12 md:w-9/12 mx-auto py-30 max-w-5xl">
       <img
         src={loan.image}
         alt={loan.title}
@@ -54,7 +64,7 @@ const LoanDetails = () => {
 
         <div className="p-4 rounded-lg shadow bg-white">
           <h3 className="text-gray-500 text-sm">Interest Rate</h3>
-          <p className="text-lg font-semibold">{loan.interest}</p>
+          <p className="text-lg font-semibold">{loan.interest}%</p>
         </div>
 
         <div className="p-4 rounded-lg shadow bg-white">
@@ -67,14 +77,13 @@ const LoanDetails = () => {
         {loan.shortDesc}
       </p>
 
-      {loan.emiPlans && loan.emiPlans.length > 0 && (
+      {emiPlans.length > 0 && (
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-3 text-green-700">
             Available EMI Plans
           </h2>
-
           <ul className="space-y-3">
-            {loan.emiPlans.map((plan, index) => (
+            {emiPlans.map((plan, index) => (
               <li
                 key={index}
                 className="p-4 bg-white shadow rounded-lg flex justify-between"
@@ -89,16 +98,16 @@ const LoanDetails = () => {
         </div>
       )}
 
-      <div className="mt-10">
-        {user && role !== "admin" && role !== "manager" && (
+      {user && role !== "admin" && role !== "manager" && (
+        <div className="mt-10">
           <button
             onClick={handleApply}
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition shadow-md"
           >
             Apply Now
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 import logoImg from "../../assets/logo.jpeg";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
@@ -16,10 +17,10 @@ const Footer = () => {
       <div className="w-10/12 mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* About Section */}
         <div>
-          <div className="flex items-center gap-3">
+          <Link to='/'  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}  className="flex items-center gap-3">
             <img src={logoImg} alt="" className="w-16 rounded-full" />
             <h3 className="text-4xl font-bold mb-4">LoanLink</h3>
-          </div>
+          </Link>
 
           <p className="text-gray-200">
             LoanLink is a secure, fast, and transparent microloan platform,

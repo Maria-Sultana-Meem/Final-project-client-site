@@ -95,12 +95,12 @@ const ManageLoans = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-5">Manage Loans</h2>
+    <div className="p-6 shadow-sm shadow-green-500">
+      <h2 className="text-2xl text-green-500 font-bold mb-5">Manage Loans</h2>
 
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
         <table className="table">
-          <thead>
+          <thead className="bg-green-500 text-white">
             <tr>
               <th>#</th>
               <th>Image</th>
@@ -136,13 +136,13 @@ const ManageLoans = () => {
                 </td>
                 <td className="flex gap-2">
                   <button
-                    className="btn btn-xs btn-outline"
+                    className="btn btn-xs bg-green-500 text-white"
                     onClick={() => openUpdateModal(loan)}
                   >
                     Update
                   </button>
                   <button
-                    className="btn btn-xs btn-error"
+                    className="btn btn-xs bg-red-500 text-white"
                     onClick={() => handleDelete(loan._id)}
                   >
                     Delete
@@ -177,7 +177,7 @@ const ManageLoans = () => {
                 required
               />
               <input
-                type="number"
+                type="text"
                 name="interest"
                 defaultValue={selectedLoan.interest}
                 className="input input-bordered w-full"
