@@ -1,13 +1,15 @@
-import React, { useState, } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../shared/LoadingSpinner";
+import ConfettiEffect from "../shared/ConfettiEffect";
 
 const LoanApplicationForm = () => {
-  const { id } = useParams(); 
+  const [showConfetti, setShowConfetti] = useState(false);
+  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -26,7 +28,6 @@ const LoanApplicationForm = () => {
     extraNotes: "",
   });
 
-  
   const { data: allLoans } = useQuery({
     queryKey: ["allLoans"],
     queryFn: async () => {
@@ -35,10 +36,9 @@ const LoanApplicationForm = () => {
     },
   });
 
- 
   const { data: loan, isLoading } = useQuery({
     queryKey: ["loan", selectedLoanId],
-    enabled: !!selectedLoanId,  
+    enabled: !!selectedLoanId,
     queryFn: async () => {
       const res = await axiosSecure.get(`/all-loans/${selectedLoanId}`);
       return res.data;
@@ -69,16 +69,26 @@ const LoanApplicationForm = () => {
 
     try {
       await axiosSecure.post("/loan-application", payload);
-      toast.success("Loan Application Submitted Successfully");
-      navigate("/dashboard/my-loans");
+
+      setShowConfetti(true);
+     
+
+      setTimeout(() => {
+        setShowConfetti(false);
+        navigate("/dashboard/my-loans");
+      }, 5000);
+
+       toast.success("Loan Application Submitted Successfully");
     } catch (err) {
-      console.error(err);
+      console.log(err);
+
       toast.error("Failed to submit application");
     }
   };
 
   return (
     <div className="py-30 w-10/12 mx-auto max-w-4xl">
+      {showConfetti && <ConfettiEffect />}
       <h2 className="text-3xl font-bold text-green-700 mb-8 text-center">
         Loan Application Form
       </h2>
@@ -103,9 +113,10 @@ const LoanApplicationForm = () => {
       {selectedLoanId && isLoading ? (
         <LoadingSpinner />
       ) : (
-        <form onSubmit={handleSubmit} className="shadow-lg p-8 rounded-lg space-y-4">
-
-          
+        <form
+          onSubmit={handleSubmit}
+          className="shadow-lg p-8 rounded-lg space-y-4"
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <label className="font-semibold">User Email</label>
@@ -138,7 +149,6 @@ const LoanApplicationForm = () => {
             </div>
           </div>
 
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label>First Name</label>
@@ -162,7 +172,6 @@ const LoanApplicationForm = () => {
             </div>
           </div>
 
-        
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label>Contact Number</label>
@@ -186,7 +195,6 @@ const LoanApplicationForm = () => {
             </div>
           </div>
 
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label>Income Source</label>
@@ -209,7 +217,6 @@ const LoanApplicationForm = () => {
             </div>
           </div>
 
-         
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label>Loan Amount</label>
@@ -232,7 +239,6 @@ const LoanApplicationForm = () => {
             </div>
           </div>
 
-          
           <div className="space-y-2">
             <label>Address</label>
             <textarea
@@ -243,7 +249,6 @@ const LoanApplicationForm = () => {
             />
           </div>
 
-         
           <div className="space-y-2">
             <label>Extra Notes</label>
             <textarea
