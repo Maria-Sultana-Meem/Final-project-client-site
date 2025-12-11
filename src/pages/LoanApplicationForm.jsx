@@ -76,7 +76,7 @@ const LoanApplicationForm = () => {
       setTimeout(() => {
         setShowConfetti(false);
         navigate("/dashboard/my-loans");
-      }, 5000);
+      }, 8000);
 
        toast.success("Loan Application Submitted Successfully");
     } catch (err) {
