@@ -34,15 +34,15 @@ const Contact = () => {
           </p>
 
           <div className="space-y-4">
-            <div className="flex items-center gap-3 text-gray-800">
+            <div className="flex items-center gap-3 ">
               <FaMapMarkerAlt className="text-green-700" />
               <span>Dhaka, Bangladesh</span>
             </div>
-            <div className="flex items-center gap-3 text-gray-800">
+            <div className="flex items-center gap-3 ">
               <FaPhone className="text-green-700" />
               <span>+880 1421 777 639</span>
             </div>
-            <div className="flex items-center gap-3 text-gray-800">
+            <div className="flex items-center gap-3 ">
               <FaEnvelope className="text-green-700" />
               <span>support@loanlink.com</span>
             </div>
@@ -69,8 +69,8 @@ const Contact = () => {
         </div>
 
     
-        <div className="bg-white shadow-lg rounded-lg p-8">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-6">Send a Message</h3>
+        <div className=" shadow-lg rounded-lg p-8">
+          <h3 className="text-2xl font-semibold  mb-6">Send a Message</h3>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <input
               type="text"

@@ -56,7 +56,7 @@ const PendingLoans = () => {
       <h2 className="text-2xl text-green-500 font-bold mb-6">Pending Loan Applications</h2>
 
       <div className="overflow-x-auto">
-        <table className="table w-full ">
+        <table className="table text-black w-full ">
           <thead className="bg-green-500 text-white">
             <tr>
               <th>Loan ID</th>

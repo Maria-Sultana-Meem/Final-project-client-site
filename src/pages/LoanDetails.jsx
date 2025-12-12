@@ -57,23 +57,23 @@ const LoanDetails = () => {
       <h1 className="text-4xl font-bold text-green-700 mt-6">{loan.title}</h1>
 
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-lg shadow bg-white">
-          <h3 className="text-gray-500 text-sm">Category</h3>
+        <div className="p-4 rounded-lg shadow ">
+          <h3 className=" text-sm">Category</h3>
           <p className="text-lg font-semibold">{loan.category}</p>
         </div>
 
-        <div className="p-4 rounded-lg shadow bg-white">
-          <h3 className="text-gray-500 text-sm">Interest Rate</h3>
+        <div className="p-4 rounded-lg shadow ">
+          <h3 className=" text-sm">Interest Rate</h3>
           <p className="text-lg font-semibold">{loan.interest}%</p>
         </div>
 
-        <div className="p-4 rounded-lg shadow bg-white">
-          <h3 className="text-gray-500 text-sm">Max Limit</h3>
+        <div className="p-4 rounded-lg shadow ">
+          <h3 className=" text-sm">Max Limit</h3>
           <p className="text-lg font-semibold">${loan.maxLimit}</p>
         </div>
       </div>
 
-      <p className="mt-6 text-lg leading-relaxed text-gray-700">
+      <p className="mt-6 text-lg leading-relaxed ">
         {loan.shortDesc}
       </p>
 
@@ -86,7 +86,7 @@ const LoanDetails = () => {
             {emiPlans.map((plan, index) => (
               <li
                 key={index}
-                className="p-4 bg-white shadow rounded-lg flex justify-between"
+                className="p-4  shadow rounded-lg flex justify-between"
               >
                 <span className="font-medium">{plan.duration} months</span>
                 <span className="text-green-600 font-semibold">

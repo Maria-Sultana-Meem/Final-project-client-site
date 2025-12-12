@@ -5,6 +5,7 @@ import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import { FaEye, FaTimes, FaCheck } from 'react-icons/fa';
+import LoadingSpinner from '../../../shared/LoadingSpinner';
 
 const MyLoans = () => {
   const { user } = useAuth(); 
@@ -21,7 +22,7 @@ const MyLoans = () => {
     enabled: !!user?.email,
   });
 
-  // Refetch if redirected from payment success
+  
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('payment') === 'success') refetch();
@@ -64,12 +65,12 @@ const MyLoans = () => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table text-black w-full">
           <thead>
             <tr>
               <th>#</th>

@@ -45,7 +45,7 @@ const LoanApplications = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto bg-base-100">
         <table className="table w-full min-w-[600px] md:min-w-full">
           <thead className="bg-green-500 text-white text-sm md:text-base">
             <tr>

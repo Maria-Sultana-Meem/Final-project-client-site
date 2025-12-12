@@ -46,7 +46,7 @@ const ManagerManageLoans = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Manage Loans</h2>
+      <h2 className="text-2xl text-black font-bold mb-4">Manage Loans</h2>
 
       {/* Search Box */}
       <input
@@ -58,7 +58,7 @@ const ManagerManageLoans = () => {
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table text-black w-full">
           <thead>
             <tr>
               <th>Image</th>

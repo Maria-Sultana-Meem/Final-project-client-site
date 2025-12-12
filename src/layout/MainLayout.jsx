@@ -4,6 +4,7 @@ import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ScrollToTop from '../shared/ScrollToTop';
 
 const MainLayout = () => {
 
@@ -16,6 +17,7 @@ const MainLayout = () => {
 
     return (
         <div>
+          <ScrollToTop></ScrollToTop>
             <Navbar></Navbar>
             <Outlet></Outlet>
             <Footer></Footer>

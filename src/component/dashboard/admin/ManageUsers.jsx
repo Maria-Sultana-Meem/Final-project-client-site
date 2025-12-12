@@ -83,7 +83,7 @@ const ManageUsers = () => {
     <div className="p-6 shadow-sm shadow-green-500">
       <h2 className="text-2xl text-green-500 font-bold mb-5">Manage Users</h2>
 
-      {/* 🔍 SEARCH + FILTER BAR */}
+      
       <div className="flex flex-col md:flex-row gap-3 mb-4">
         <input
           type="text"
