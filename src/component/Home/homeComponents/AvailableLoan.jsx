@@ -24,7 +24,7 @@ const AvailableLoan = () => {
         </h2>
 
         {/* 3 Column Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
           {loans.map((loan) => (
             <div data-aos="fade-up"
@@ -50,19 +50,20 @@ const AvailableLoan = () => {
                 </p>
 
                 {/* Max Limit */}
-                <div className="mt-auto flex items-center justify-between">
+                <div className="mt-auto  items-center justify-between">
                   <span className="text-red-600 font-semibold">
                     Max Limit: ${loan.maxLimit}
                   </span>
 
                   {/* View Details */}
-                  <Link
+                  
+                </div>
+                <Link
                     to={`/all-loans/${loan._id}`}
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm transition"
+                    className="bg-green-600 text-center hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm transition"
                   >
                     View Details
                   </Link>
-                </div>
               </div>
             </div>
           ))}

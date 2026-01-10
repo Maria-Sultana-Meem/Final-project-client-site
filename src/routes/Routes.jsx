@@ -27,6 +27,7 @@ import UpdateLoan from "../component/dashboard/manager/UpdateLoan";
 import PendingLoans from "../component/dashboard/manager/PendingLoans";
 import ApprovedLoans from "../component/dashboard/manager/ApprovedLoans";
 import ManagerProfile from "../component/dashboard/manager/ManagersProfile";
+import BlogDetails from "../component/Home/homeComponents/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
       {
         path: "/all-loans",
         Component: AllLoans,
+      },
+      {
+        path:"/blogs/:id",
+        Component:BlogDetails
+
       },
       {
         path: "/all-loans/:id",
