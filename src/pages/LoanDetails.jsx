@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
@@ -13,10 +13,21 @@ const LoanDetails = () => {
   const { user } = useAuth();
   const [role, roleLoading] = useRole();
 
+  // Loan Details
   const { data: loan = {}, isLoading } = useQuery({
     queryKey: ["loanDetails", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/all-loans/${id}`);
+      return res.data;
+    },
+  });
+
+  // Related Loans
+  const { data: related = [] } = useQuery({
+    queryKey: ["relatedLoans", loan.category],
+    enabled: !!loan.category,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/all-loans?category=${loan.category}`);
       return res.data;
     },
   });
@@ -29,85 +40,112 @@ const LoanDetails = () => {
       return navigate("/login");
     }
     if (role === "admin" || role === "manager") {
-      return toast.error("Admins & Managers cannot apply for loans!");
+      return toast.error("Admins & Managers cannot apply!");
     }
     navigate(`/loan-application/${loan._id}`);
   };
 
-  
-  const numericInterest = parseFloat(loan.interest) || 0;
-  const numericMaxLimit = parseFloat(loan.maxLimit) || 0;
-
-  
-  const emiPlans = loan.emiPlans?.map(plan => ({
-    duration: parseInt(plan.duration) || 1,
-    monthlyPayment:
-      plan.monthlyPayment ??
-      Math.round((numericMaxLimit * numericInterest) / 100 / (parseInt(plan.duration) || 1))
-  })) || [];
+  const images = loan.images?.length ? loan.images : [loan.image];
 
   return (
-    <div className="w-11/12 md:w-9/12 mx-auto py-30 max-w-5xl">
-      <img
-        src={loan.image}
-        alt={loan.title}
-        className="w-1/2 mx-auto h-72 object-cover rounded-xl shadow-lg"
-      />
+    <div className="w-11/12 md:w-10/12 mx-auto py-30 max-w-7xl">
 
-      <h1 className="text-4xl font-bold text-green-700 mt-6">{loan.title}</h1>
+      {/* ===== Image Gallery ===== */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {images.map((img, i) => (
+          <img
+            key={i}
+            src={img}
+            alt="loan"
+            className="h-64 w-full object-cover rounded-xl shadow"
+          />
+        ))}
+      </div>
 
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-lg shadow ">
-          <h3 className=" text-sm">Category</h3>
-          <p className="text-lg font-semibold">{loan.category}</p>
+      {/* ===== Title ===== */}
+      <h1 className="text-4xl font-bold text-green-700 mt-8">{loan.title}</h1>
+
+      {/* ===== Key Information ===== */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div className="p-4 rounded-lg shadow">
+          <p className="text-sm">Category</p>
+          <p className="font-semibold">{loan.category}</p>
         </div>
-
-        <div className="p-4 rounded-lg shadow ">
-          <h3 className=" text-sm">Interest Rate</h3>
-          <p className="text-lg font-semibold">{loan.interest}%</p>
+        <div className="p-4 rounded-lg shadow">
+          <p className="text-sm">Interest</p>
+          <p className="font-semibold">{loan.interest}%</p>
         </div>
-
-        <div className="p-4 rounded-lg shadow ">
-          <h3 className=" text-sm">Max Limit</h3>
-          <p className="text-lg font-semibold">${loan.maxLimit}</p>
+        <div className="p-4 rounded-lg shadow">
+          <p className="text-sm">Max Limit</p>
+          <p className="font-semibold">${loan.maxLimit}</p>
+        </div>
+        <div className="p-4 rounded-lg shadow">
+          <p className="text-sm">Processing Time</p>
+          <p className="font-semibold">{loan.processingTime || "48 hours"}</p>
         </div>
       </div>
 
-      <p className="mt-6 text-lg leading-relaxed ">
-        {loan.shortDesc}
-      </p>
+      {/* ===== Description / Overview ===== */}
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold mb-3">Overview</h2>
+        <p className="leading-relaxed text-gray-600 dark:text-gray-300">
+          {loan.shortDesc}
+        </p>
+      </div>
 
-      {emiPlans.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-3 text-green-700">
-            Available EMI Plans
-          </h2>
-          <ul className="space-y-3">
-            {emiPlans.map((plan, index) => (
-              <li
-                key={index}
-                className="p-4  shadow rounded-lg flex justify-between"
-              >
-                <span className="font-medium">{plan.duration} months</span>
-                <span className="text-green-600 font-semibold">
-                  ${plan.monthlyPayment} / month
-                </span>
-              </li>
-            ))}
-          </ul>
+      {/* ===== Reviews (Static) ===== */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+        <div className="space-y-4">
+          <div className="p-4 rounded-lg shadow">
+            <p className="font-semibold">⭐ 5.0 - Ahmed</p>
+            <p className="text-sm">Very easy and fast loan approval!</p>
+          </div>
+          <div className="p-4 rounded-lg shadow">
+            <p className="font-semibold">⭐ 4.5 - Riya</p>
+            <p className="text-sm">Low interest and simple process.</p>
+          </div>
         </div>
-      )}
+      </div>
 
+      {/* ===== Apply Button ===== */}
       {user && role !== "admin" && role !== "manager" && (
         <div className="mt-10">
           <button
             onClick={handleApply}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition shadow-md"
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg text-lg font-semibold"
           >
             Apply Now
           </button>
         </div>
       )}
+
+      {/* ===== Related Loans ===== */}
+      <div className="mt-20">
+        <h2 className="text-2xl font-bold mb-6">Related Loans</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {related.slice(0, 4).map((item) => (
+            <div key={item._id} className="shadow rounded-xl overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-4">
+                <h3 className="font-semibold">{item.title}</h3>
+                <p className="text-sm">{item.category}</p>
+                <Link
+                  to={`/all-loans/${item._id}`}
+                  className="text-green-600 text-sm font-semibold"
+                >
+                  View Details →
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
