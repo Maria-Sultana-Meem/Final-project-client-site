@@ -12,22 +12,26 @@ const ManagerManageLoans = () => {
   const [searchText, setSearchText] = useState("");
   const [deleteId, setDeleteId] = useState(null);
 
-  // Fetch all loans
-  const { data: loans = [], isLoading, refetch } = useQuery({
-    queryKey: ["allLoans"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/all-loans");
-      return res.data;
-    },
-  });
+ // Fetch all loans
+const { data, isLoading, refetch } = useQuery({
+  queryKey: ["allLoans"],
+  queryFn: async () => {
+    const res = await axiosSecure.get("/all-loans");
+    return res.data;
+  },
+});
 
-  if (isLoading) return <LoadingSpinner />;
+// Make sure loans is always an array
+const loans = Array.isArray(data?.loans) ? data.loans : [];
 
-  // Filter loans by search text
-  const filteredLoans = loans.filter((loan) =>
-    loan.title.toLowerCase().includes(searchText.toLowerCase()) ||
-    loan.category.toLowerCase().includes(searchText.toLowerCase())
-  );
+if (isLoading) return <LoadingSpinner />;
+
+// Filter loans
+const filteredLoans = loans.filter((loan) =>
+  loan.title.toLowerCase().includes(searchText.toLowerCase()) ||
+  loan.category.toLowerCase().includes(searchText.toLowerCase())
+);
+
 
   // Delete loan
   const handleDelete = async () => {
